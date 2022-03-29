@@ -654,11 +654,13 @@ pub fn initialize_market(
         }
     }
 
-    Ok(Instruction {
+    let inst = Ok(Instruction {
         program_id: *program_id,
         data,
         accounts,
-    })
+    });
+    println!("{:?}", inst);
+    inst
 }
 
 pub fn new_order(

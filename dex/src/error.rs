@@ -1,4 +1,5 @@
 use num_enum::{FromPrimitive, IntoPrimitive};
+use solana_program::msg;
 use solana_program::program_error::ProgramError;
 use thiserror::Error;
 
@@ -12,12 +13,14 @@ pub struct AssertionError {
 
 impl From<AssertionError> for u32 {
     fn from(err: AssertionError) -> u32 {
+        msg!("PANIC {:?} {:?}", err.line, err.file_id);
         (err.line as u32) + ((err.file_id as u8 as u32) << 24)
     }
 }
 
 impl From<AssertionError> for DexError {
     fn from(err: AssertionError) -> DexError {
+        msg!("PANIC {:?} {:?}", err.line, err.file_id);
         let err: u32 = err.into();
         DexError::ProgramError(ProgramError::Custom(err.into()))
     }

@@ -95,12 +95,14 @@ fn new_dex_owned_account<'bump, Gen: Rng>(
     program_id: &'bump Pubkey,
     bump: &'bump Bump,
 ) -> AccountInfo<'bump> {
+    let data = allocate_dex_owned_account(unpadded_len, bump);
+    println!("DATA LEN {}", data.len());
     AccountInfo::new(
         random_pubkey(rng, bump),
         false,
         true,
         bump.alloc(60_000_000_000),
-        allocate_dex_owned_account(unpadded_len, bump),
+        data,
         program_id,
         false,
         Epoch::default(),
