@@ -32,7 +32,7 @@ pub struct InnerNode {
     tag: u32,
     prefix_len: u32,
     key: u128,
-    children: [u32; 2],
+    pub children: [u32; 2],
     _padding: [u64; 5],
 }
 unsafe impl Zeroable for InnerNode {}
@@ -258,7 +258,7 @@ pub struct SlabHeader {
     free_list_head: u32,
 
     root_node: u32,
-    leaf_count: u64,
+    pub leaf_count: u64,
 }
 unsafe impl Zeroable for SlabHeader {}
 unsafe impl Pod for SlabHeader {}
