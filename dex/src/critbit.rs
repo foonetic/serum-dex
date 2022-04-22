@@ -28,7 +28,7 @@ enum NodeTag {
 #[derive(Copy, Clone)]
 #[repr(packed)]
 #[allow(dead_code)]
-struct InnerNode {
+pub struct InnerNode {
     tag: u32,
     prefix_len: u32,
     key: u128,
@@ -168,12 +168,12 @@ pub struct AnyNode {
 unsafe impl Zeroable for AnyNode {}
 unsafe impl Pod for AnyNode {}
 
-enum NodeRef<'a> {
+pub enum NodeRef<'a> {
     Inner(&'a InnerNode),
     Leaf(&'a LeafNode),
 }
 
-enum NodeRefMut<'a> {
+pub enum NodeRefMut<'a> {
     Inner(&'a mut InnerNode),
     Leaf(&'a mut LeafNode),
 }
@@ -201,7 +201,7 @@ impl AnyNode {
         }
     }
 
-    fn case(&self) -> Option<NodeRef> {
+    pub fn case(&self) -> Option<NodeRef> {
         match NodeTag::try_from(self.tag) {
             Ok(NodeTag::InnerNode) => Some(NodeRef::Inner(cast_ref(self))),
             Ok(NodeTag::LeafNode) => Some(NodeRef::Leaf(cast_ref(self))),
@@ -252,7 +252,7 @@ const_assert_eq!(_NODE_ALIGN, align_of::<AnyNode>());
 
 #[derive(Copy, Clone)]
 #[repr(packed)]
-struct SlabHeader {
+pub struct SlabHeader {
     bump_index: u64,
     free_list_len: u64,
     free_list_head: u32,
@@ -347,7 +347,7 @@ impl Slab {
         (header, nodes)
     }
 
-    fn header(&self) -> &SlabHeader {
+    pub fn header(&self) -> &SlabHeader {
         self.parts().0
     }
 
@@ -492,7 +492,7 @@ pub enum SlabTreeError {
 }
 
 impl Slab {
-    fn root(&self) -> Option<NodeHandle> {
+    pub fn root(&self) -> Option<NodeHandle> {
         if self.header().leaf_count == 0 {
             return None;
         }
