@@ -727,7 +727,7 @@ impl Slab {
     }
 
     #[cfg(test)]
-    fn traverse(&self) -> Vec<&LeafNode> {
+    pub fn traverse(&self) -> Vec<&LeafNode> {
         fn walk_rec<'a>(slab: &'a Slab, sub_root: NodeHandle, buf: &mut Vec<&'a LeafNode>) {
             match slab.get(sub_root).unwrap().case().unwrap() {
                 NodeRef::Leaf(leaf) => {
