@@ -347,7 +347,7 @@ impl Slab {
         (header, nodes)
     }
 
-    fn header(&self) -> &SlabHeader {
+    pub fn header(&self) -> &SlabHeader {
         self.parts().0
     }
 
@@ -355,7 +355,7 @@ impl Slab {
         self.parts_mut().0
     }
 
-    fn nodes(&self) -> &[AnyNode] {
+    pub fn nodes(&self) -> &[AnyNode] {
         self.parts().1
     }
 
