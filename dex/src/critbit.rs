@@ -281,7 +281,7 @@ unsafe fn invariant(check: bool) {
 }
 
 #[repr(transparent)]
-pub struct Slab([u8]);
+pub struct Slab(pub [u8]);
 
 impl Slab {
     /// Creates a slab that holds and references the bytes
